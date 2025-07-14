@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -11,36 +10,68 @@
       padding: 20px;
       margin: 0;
     }
+
     h1 {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 10px;
     }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      margin: 0 5px;
+      background-color: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background-color: #444;
+      color: #00ffc3;
+    }
+
     .ranking {
-      width: 100%;
+      display: none;
       max-width: 500px;
-      margin: 0 auto 60px auto;
-      background: #1e1e1e;
+      margin: 0 auto;
+      background-color: #1e1e1e;
       border-radius: 10px;
       padding: 20px;
       box-shadow: 0 0 10px rgba(255,255,255,0.1);
     }
+
+    .ranking.active {
+      display: block;
+    }
+
     h2 {
       text-align: center;
       margin-bottom: 20px;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      background-color: #1e1e1e;
     }
-    th, td {
+
+    td {
       padding: 12px;
       border-bottom: 1px solid #333;
     }
+
     td.name {
       text-align: left;
       color: #ffffff;
     }
+
     td.points {
       text-align: center;
       font-weight: bold;
@@ -49,9 +80,14 @@
   </style>
 </head>
 <body>
-  <h1>Ranking ELO Güsak</h1>
+  <h1>Ranking ELO Güsak 🪱</h1>
 
-  <div class="ranking">
+  <div class="tabs">
+    <div class="tab active" onclick="showRanking('futbol', this)">⚽️ Fútbol</div>
+    <div class="tab" onclick="showRanking('mus', this)">🃏 Mus</div>
+  </div>
+
+  <div id="futbol" class="ranking active">
     <h2>⚽️ Fútbol</h2>
     <table>
       <tbody>
@@ -74,7 +110,7 @@
     </table>
   </div>
 
-  <div class="ranking">
+  <div id="mus" class="ranking">
     <h2>🃏 Mus</h2>
     <table>
       <tbody>
@@ -91,5 +127,18 @@
       </tbody>
     </table>
   </div>
+
+  <script>
+    function showRanking(id, tabElement) {
+      const rankings = document.querySelectorAll('.ranking');
+      const tabs = document.querySelectorAll('.tab');
+
+      rankings.forEach(r => r.classList.remove('active'));
+      tabs.forEach(t => t.classList.remove('active'));
+
+      document.getElementById(id).classList.add('active');
+      tabElement.classList.add('active');
+    }
+  </script>
 </body>
 </html>
