@@ -6,7 +6,7 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #121212;
-      color: #000000;
+      color: #FFFFFF;
       padding: 20px;
       margin: 0;
     }
@@ -45,7 +45,7 @@
       background-color: #1e1e1e;
       border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     .ranking.active {
