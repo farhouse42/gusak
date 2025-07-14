@@ -2,18 +2,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Ranking ELO Güsak</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #121212;
-      color: #FFFFFF;
-      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
       margin: 0;
+      padding: 20px;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      font-size: 2.2em;
     }
 
     .tabs {
@@ -24,37 +26,50 @@
 
     .tab {
       padding: 10px 20px;
-      margin: 0 5px;
-      background-color: #2a2a2a;
-      border: 1px solid #444;
-      border-radius: 6px;
-      color: #fff;
+      margin: 0 8px;
+      background-color: #1e1e1e;
+      border: none;
+      border-radius: 8px;
+      color: #ccc;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .tab:hover {
+      background-color: #2a2a2a;
+      color: #fff;
     }
 
     .tab.active {
-      background-color: #444;
-      color: #00ffc3;
+      background-color: #00ffc3;
+      color: #121212;
     }
 
     .ranking {
       display: none;
       max-width: 500px;
       margin: 0 auto;
-      background-color: #1e1e1e;
-      border-radius: 10px;
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
     }
 
     .ranking.active {
       display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+      color: #00ffc3;
     }
 
     table {
@@ -69,29 +84,34 @@
 
     td.name {
       text-align: left;
-      color: #000000;
     }
 
     td.points {
-      text-align: center;
+      text-align: right;
       font-weight: bold;
       color: #00ffc3;
+    }
+
+    /* Resaltar líder */
+    tbody tr:first-child td.name {
+      color: gold;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>Ranking ELO Güsak 🪱</h1>
+  <h1>Ranking ELO Güsak 🐍</h1>
 
   <div class="tabs">
-    <div class="tab active" onclick="showRanking('futbol', this)">⚽️ Fútbol</div>
-    <div class="tab" onclick="showRanking('mus', this)">🃏 Mus</div>
+    <button class="tab active" onclick="showRanking('futbol', this)">⚽ Fútbol</button>
+    <button class="tab" onclick="showRanking('mus', this)">🃏 Mus</button>
   </div>
 
   <div id="futbol" class="ranking active">
-    <h2>⚽️ Fútbol</h2>
+    <h2>⚽ Fútbol</h2>
     <table>
       <tbody>
-        <tr><td class="name">Markel</td><td class="points">1438</td></tr>
+        <tr><td class="name">Markel 🏆</td><td class="points">1438</td></tr>
         <tr><td class="name">Galder</td><td class="points">1377</td></tr>
         <tr><td class="name">Aimar</td><td class="points">1372</td></tr>
         <tr><td class="name">Ruiz</td><td class="points">1372</td></tr>
@@ -114,7 +134,7 @@
     <h2>🃏 Mus</h2>
     <table>
       <tbody>
-        <tr><td class="name">Garay</td><td class="points">1444</td></tr>
+        <tr><td class="name">Garay 🏆</td><td class="points">1444</td></tr>
         <tr><td class="name">Josu</td><td class="points">1402</td></tr>
         <tr><td class="name">Rodri</td><td class="points">1334</td></tr>
         <tr><td class="name">Enaitz</td><td class="points">1207</td></tr>
