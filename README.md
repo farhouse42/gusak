@@ -6,7 +6,7 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #121212;
-      color: #f0f0f0;
+      color: #000000;
       padding: 20px;
       margin: 0;
     }
