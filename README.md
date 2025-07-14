@@ -69,7 +69,7 @@
 
     td.name {
       text-align: left;
-      color: #ffffff;
+      color: #000000;
     }
 
     td.points {
