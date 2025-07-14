@@ -1,76 +1,71 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ranking ELO Güsak</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #f0f0f0;
+      background-color: #000000;
+      color: #F4F0E3;
       margin: 0;
       padding: 20px;
+      text-align: center;
     }
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 2.2em;
+    img.logo {
+      max-width: 150px;
+      margin: 10px auto 20px;
+      display: block;
     }
 
     .tabs {
       display: flex;
       justify-content: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .tab {
-      padding: 10px 20px;
-      margin: 0 8px;
-      background-color: #1e1e1e;
+      padding: 10px 18px;
+      background-color: #80785C;
       border: none;
       border-radius: 8px;
-      color: #ccc;
+      color: #FFFFFF;
       cursor: pointer;
       font-weight: 600;
       transition: all 0.3s ease;
     }
 
     .tab:hover {
-      background-color: #2a2a2a;
-      color: #fff;
+      background-color: #9c9579;
     }
 
     .tab.active {
-      background-color: #00ffc3;
-      color: #121212;
+      background-color: #F4F0E3;
+      color: #000000;
     }
 
     .ranking {
       display: none;
       max-width: 500px;
       margin: 0 auto;
-      background: rgba(30, 30, 30, 0.8);
+      background: #1a1a1a;
       border-radius: 12px;
       padding: 20px;
-      backdrop-filter: blur(10px);
+      border: 2px solid #80785C;
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.4s ease;
     }
 
     .ranking.active {
       display: block;
-      opacity: 1;
-      transform: translateY(0);
     }
 
     h2 {
-      text-align: center;
       margin-bottom: 15px;
-      color: #00ffc3;
+      color: #80785C;
     }
 
     table {
@@ -90,24 +85,42 @@
     td.points {
       text-align: right;
       font-weight: bold;
-      color: #00ffc3;
+      color: #F4F0E3;
     }
 
-    /* Resaltar líder */
     tbody tr:first-child td.name {
-      color: gold;
+      color: #FFD700;
       font-weight: bold;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .ranking {
+        width: 90%;
+        padding: 15px;
+      }
+      td {
+        font-size: 14px;
+        padding: 8px;
+      }
+      .tab {
+        flex: 1 1 auto;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>🪱 Güsak - Ranking ELO</h1>
+  <!-- Logo -->
+  <img src="logo.png" alt="Güsak Logo" class="logo">
 
+  <!-- Pestañas -->
   <div class="tabs">
     <button class="tab active" onclick="showRanking('futbol', this)">⚽ Fútbol</button>
     <button class="tab" onclick="showRanking('mus', this)">🃏 Mus</button>
   </div>
 
+  <!-- Ranking Fútbol -->
   <div id="futbol" class="ranking active">
     <h2>⚽ Fútbol</h2>
     <table>
@@ -131,6 +144,7 @@
     </table>
   </div>
 
+  <!-- Ranking Mus -->
   <div id="mus" class="ranking">
     <h2>🃏 Mus</h2>
     <table>
@@ -163,4 +177,3 @@
   </script>
 </body>
 </html>
-
