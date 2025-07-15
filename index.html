@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ranking ELO Güsak</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Clasificación Quiniela Güsak</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -23,20 +24,20 @@
     .tabs {
       display: flex;
       justify-content: center;
+      gap: 10px;
       margin-bottom: 20px;
       flex-wrap: wrap;
-      gap: 10px;
     }
 
     .tab {
-      padding: 10px 18px;
+      padding: 10px 20px;
       background-color: #80785C;
+      color: #FFFFFF;
       border: none;
       border-radius: 8px;
-      color: #FFFFFF;
       cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
+      font-weight: bold;
+      transition: background 0.3s;
     }
 
     .tab:hover {
@@ -50,32 +51,37 @@
 
     .ranking {
       display: none;
-      max-width: 500px;
+      max-width: 95%;
       margin: 0 auto;
       background: #1a1a1a;
       border-radius: 12px;
       padding: 20px;
       border: 2px solid #80785C;
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      animation: fadeIn 0.6s ease;
+      overflow-x: auto;
     }
 
     .ranking.active {
       display: block;
     }
 
-    h2 {
-      margin-bottom: 15px;
-      color: #80785C;
-    }
-
     table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 400px;
     }
 
-    td {
-      padding: 12px;
+    th, td {
+      padding: 10px;
       border-bottom: 1px solid #333;
+      text-align: center;
+    }
+
+    th {
+      background-color: #80785C;
+      color: #FFFFFF;
+      font-weight: bold;
     }
 
     td.name {
@@ -83,113 +89,88 @@
     }
 
     td.points {
-      text-align: right;
+      font-family: Consolas, monospace;
       font-weight: bold;
       color: #F4F0E3;
-      font-family: Consolas, "Courier New", monospace;
     }
 
-    tbody tr:first-child td.name {
-      color: #FFD700;
-      font-weight: bold;
-    }
+    /* Animación fade-in */
     @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.ranking.active {
-  display: block;
-  animation: fadeIn 0.6s ease;
-}
 
     /* Responsive */
     @media (max-width: 600px) {
-      .ranking {
-        width: 90%;
-        padding: 15px;
-      }
-      td {
-        font-size: 14px;
-        padding: 8px;
-      }
-      .tab {
-        flex: 1 1 auto;
-        font-size: 14px;
-      }
+      th, td { font-size: 14px; padding: 8px; }
+      .tab { font-size: 14px; flex: 1 1 auto; }
     }
   </style>
 </head>
 <body>
-  <!-- Logo -->
-  <img src="logo.png" alt="Güsak Logo" class="logo">
+  <img src="logo.png" alt="Logo Güsak" class="logo">
 
-  <!-- Pestañas -->
   <div class="tabs">
-    <button class="tab active" onclick="showRanking('futbol', this)">⚽ Fútbol</button>
-    <button class="tab" onclick="showRanking('mus', this)">🃏 Mus</button>
+    <button class="tab active" onclick="showRanking('primera', this)">1ª Vuelta</button>
+    <button class="tab" onclick="showRanking('segunda', this)">2ª Vuelta</button>
   </div>
 
-  <!-- Ranking Fútbol -->
-  <div id="futbol" class="ranking active">
-    <h2>⚽ Fútbol</h2>
-    <table>
-      <tbody>
-        <tr><td class="name">Markel 🏆</td><td class="points">1438</td></tr>
-        <tr><td class="name">Galder</td><td class="points">1377</td></tr>
-        <tr><td class="name">Aimar</td><td class="points">1372</td></tr>
-        <tr><td class="name">Ruiz</td><td class="points">1372</td></tr>
-        <tr><td class="name">Carre</td><td class="points">1307</td></tr>
-        <tr><td class="name">Ander</td><td class="points">1269</td></tr>
-        <tr><td class="name">Rio</td><td class="points">1227</td></tr>
-        <tr><td class="name">Danel</td><td class="points">1193</td></tr>
-        <tr><td class="name">Bilbao</td><td class="points">1173</td></tr>
-        <tr><td class="name">Salva</td><td class="points">1149</td></tr>
-        <tr><td class="name">Garay</td><td class="points">1131</td></tr>
-        <tr><td class="name">Ima</td><td class="points">1093</td></tr>
-        <tr><td class="name">Josu</td><td class="points">964</td></tr>
-        <tr><td class="name">Almi</td><td class="points">920</td></tr>
-        <tr><td class="name">Ibon</td><td class="points">920</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Ranking Mus -->
-  <div id="mus" class="ranking">
-    <h2>🃏 Mus</h2>
-    <table>
-      <tbody>
-        <tr><td class="name">Garay 🏆</td><td class="points">1444</td></tr>
-        <tr><td class="name">Josu</td><td class="points">1402</td></tr>
-        <tr><td class="name">Rodri</td><td class="points">1334</td></tr>
-        <tr><td class="name">Enaitz</td><td class="points">1207</td></tr>
-        <tr><td class="name">Ander</td><td class="points">1179</td></tr>
-        <tr><td class="name">Salva</td><td class="points">1149</td></tr>
-        <tr><td class="name">Lander</td><td class="points">1147</td></tr>
-        <tr><td class="name">Danel</td><td class="points">1145</td></tr>
-        <tr><td class="name">Rio</td><td class="points">1130</td></tr>
-        <tr><td class="name">Carre</td><td class="points">1099</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div id="primera" class="ranking active">Cargando datos...</div>
+  <div id="segunda" class="ranking">Cargando datos...</div>
 
   <script>
-    function showRanking(id, tabElement) {
-      const rankings = document.querySelectorAll('.ranking');
-      const tabs = document.querySelectorAll('.tab');
+    const SHEET_ID = '100wFVVxz7NQKgx27O8IFwwan0bWpvnXUExuo0Pt7zL0';
+    const SHEET_1 = '1ª Vuelta';  // Nombre exacto de la pestaña en Google Sheets
+    const SHEET_2 = '2ª Vuelta';  // Nombre exacto de la segunda pestaña
 
-      rankings.forEach(r => r.classList.remove('active'));
-      tabs.forEach(t => t.classList.remove('active'));
-
+    function showRanking(id, btn) {
+      document.querySelectorAll('.ranking').forEach(div => div.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-      tabElement.classList.add('active');
+      btn.classList.add('active');
     }
+
+    function renderTable(data, containerId) {
+      if (!data || data.length === 0) {
+        document.getElementById(containerId).innerHTML = '<p>No hay datos disponibles</p>';
+        return;
+      }
+      // Ordenar por Total (si existe la columna)
+      if (data[0].Total) {
+        data.sort((a, b) => parseFloat(b.Total) - parseFloat(a.Total));
+      }
+      let html = '<table><thead><tr>';
+      Object.keys(data[0]).forEach(key => {
+        html += `<th>${key}</th>`;
+      });
+      html += '</tr></thead><tbody>';
+      data.forEach(row => {
+        html += '<tr>';
+        for (let key in row) {
+          html += `<td class="${key.toLowerCase()==='total'?'points':'name'}">${row[key]}</td>`;
+        }
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById(containerId).innerHTML = html;
+    }
+
+    function loadData(sheetName, containerId) {
+      Tabletop.init({
+        key: `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pubhtml`,
+        simpleSheet: false,
+        callback: function(data) {
+          if (data[sheetName]) {
+            renderTable(data[sheetName].elements, containerId);
+          } else {
+            document.getElementById(containerId).innerHTML = '<p>No se encontró la hoja: '+sheetName+'</p>';
+          }
+        }
+      });
+    }
+
+    loadData(SHEET_1, 'primera');
+    loadData(SHEET_2, 'segunda');
   </script>
 </body>
 </html>
