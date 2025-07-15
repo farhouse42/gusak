@@ -3,42 +3,165 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prueba Google Sheets</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
+  <title>Ranking ELO - Güsak</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000000;
+      color: #F4F0E3;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    img.logo {
+      max-width: 150px;
+      margin: 10px auto 20px;
+      display: block;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background-color: #80785C;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .tab:hover {
+      background-color: #9c9579;
+    }
+
+    .tab.active {
+      background-color: #F4F0E3;
+      color: #000000;
+    }
+
+    .ranking {
+      display: none;
+      max-width: 400px;
+      margin: 0 auto;
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+      border: 2px solid #80785C;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      animation: fadeIn 0.6s ease;
+    }
+
+    .ranking.active {
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #333;
+    }
+
+    th {
+      background-color: #80785C;
+      color: #FFFFFF;
+    }
+
+    td.name {
+      text-align: left;
+    }
+
+    td.points {
+      text-align: center;
+      font-family: Consolas, monospace;
+      font-weight: bold;
+      color: #F4F0E3;
+    }
+
+    /* Animación */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .tab { font-size: 14px; padding: 8px 12px; }
+    }
+  </style>
 </head>
-<body style="font-family:Arial;text-align:center;">
-  <h1>Test conexión Google Sheets</h1>
-  <div id="output">Cargando datos...</div>
+<body>
+  <img src="logo.png" alt="Logo Güsak" class="logo">
+
+  <div class="tabs">
+    <button class="tab active" onclick="showRanking('futbol', this)">⚽ Fútbol</button>
+    <button class="tab" onclick="showRanking('mus', this)">🃏 Mus</button>
+  </div>
+
+  <div id="futbol" class="ranking active">
+    <h2>Ranking Fútbol</h2>
+    <table>
+      <thead>
+        <tr><th>Jugador</th><th>Puntos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Markel</td><td class="points">1438</td></tr>
+        <tr><td class="name">Galder</td><td class="points">1377</td></tr>
+        <tr><td class="name">Aimar</td><td class="points">1372</td></tr>
+        <tr><td class="name">Ruiz</td><td class="points">1372</td></tr>
+        <tr><td class="name">Carre</td><td class="points">1307</td></tr>
+        <tr><td class="name">Ander</td><td class="points">1269</td></tr>
+        <tr><td class="name">Rio</td><td class="points">1227</td></tr>
+        <tr><td class="name">Danel</td><td class="points">1193</td></tr>
+        <tr><td class="name">Bilbao</td><td class="points">1173</td></tr>
+        <tr><td class="name">Salva</td><td class="points">1149</td></tr>
+        <tr><td class="name">Garay</td><td class="points">1131</td></tr>
+        <tr><td class="name">Ima</td><td class="points">1093</td></tr>
+        <tr><td class="name">Josu</td><td class="points">964</td></tr>
+        <tr><td class="name">Almi</td><td class="points">920</td></tr>
+        <tr><td class="name">Ibon</td><td class="points">920</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="mus" class="ranking">
+    <h2>Ranking Mus</h2>
+    <table>
+      <thead>
+        <tr><th>Jugador</th><th>Puntos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Garay</td><td class="points">1444</td></tr>
+        <tr><td class="name">Josu</td><td class="points">1402</td></tr>
+        <tr><td class="name">Rodri</td><td class="points">1334</td></tr>
+        <tr><td class="name">Enaitz</td><td class="points">1207</td></tr>
+        <tr><td class="name">Ander</td><td class="points">1179</td></tr>
+        <tr><td class="name">Salva</td><td class="points">1149</td></tr>
+        <tr><td class="name">Lander</td><td class="points">1147</td></tr>
+        <tr><td class="name">Danel</td><td class="points">1145</td></tr>
+        <tr><td class="name">Rio</td><td class="points">1130</td></tr>
+        <tr><td class="name">Carre</td><td class="points">1099</td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <script>
-    const SHEET_ID = '100wFVVxz7NQKgx27O8IFwwan0bWpvnXUExuo0Pt7zL0';
-
-    Tabletop.init({
-      key: `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pubhtml`,
-      simpleSheet: true,
-      callback: function(data, tabletop) {
-        console.log("Datos cargados:", data); // Mira en la consola del navegador
-        if (data.length === 0) {
-          document.getElementById('output').innerHTML = "No se encontraron datos.";
-          return;
-        }
-        // Mostrar datos en HTML
-        let html = "<table border='1' style='margin:0 auto;'><tr>";
-        Object.keys(data[0]).forEach(key => {
-          html += `<th>${key}</th>`;
-        });
-        html += "</tr>";
-        data.forEach(row => {
-          html += "<tr>";
-          for (let key in row) {
-            html += `<td>${row[key]}</td>`;
-          }
-          html += "</tr>";
-        });
-        html += "</table>";
-        document.getElementById('output').innerHTML = html;
-      }
-    });
+    function showRanking(id, btn) {
+      document.querySelectorAll('.ranking').forEach(div => div.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+    }
   </script>
 </body>
 </html>
