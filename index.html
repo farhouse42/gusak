@@ -3,174 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clasificación Quiniela Güsak</title>
+  <title>Prueba Google Sheets</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #000000;
-      color: #F4F0E3;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
-    }
-
-    img.logo {
-      max-width: 150px;
-      margin: 10px auto 20px;
-      display: block;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .tab {
-      padding: 10px 20px;
-      background-color: #80785C;
-      color: #FFFFFF;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .tab:hover {
-      background-color: #9c9579;
-    }
-
-    .tab.active {
-      background-color: #F4F0E3;
-      color: #000000;
-    }
-
-    .ranking {
-      display: none;
-      max-width: 95%;
-      margin: 0 auto;
-      background: #1a1a1a;
-      border-radius: 12px;
-      padding: 20px;
-      border: 2px solid #80785C;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      animation: fadeIn 0.6s ease;
-      overflow-x: auto;
-    }
-
-    .ranking.active {
-      display: block;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 400px;
-    }
-
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid #333;
-      text-align: center;
-    }
-
-    th {
-      background-color: #80785C;
-      color: #FFFFFF;
-      font-weight: bold;
-    }
-
-    td.name {
-      text-align: left;
-    }
-
-    td.points {
-      font-family: Consolas, monospace;
-      font-weight: bold;
-      color: #F4F0E3;
-    }
-
-    /* Animación fade-in */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      th, td { font-size: 14px; padding: 8px; }
-      .tab { font-size: 14px; flex: 1 1 auto; }
-    }
-  </style>
 </head>
-<body>
-  <img src="logo.png" alt="Logo Güsak" class="logo">
-
-  <div class="tabs">
-    <button class="tab active" onclick="showRanking('primera', this)">1ª Vuelta</button>
-    <button class="tab" onclick="showRanking('segunda', this)">2ª Vuelta</button>
-  </div>
-
-  <div id="primera" class="ranking active">Cargando datos...</div>
-  <div id="segunda" class="ranking">Cargando datos...</div>
+<body style="font-family:Arial;text-align:center;">
+  <h1>Test conexión Google Sheets</h1>
+  <div id="output">Cargando datos...</div>
 
   <script>
     const SHEET_ID = '100wFVVxz7NQKgx27O8IFwwan0bWpvnXUExuo0Pt7zL0';
-    const SHEET_1 = '1ª Vuelta';  // Nombre exacto de la pestaña en Google Sheets
-    const SHEET_2 = '2ª Vuelta';  // Nombre exacto de la segunda pestaña
 
-    function showRanking(id, btn) {
-      document.querySelectorAll('.ranking').forEach(div => div.classList.remove('active'));
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      btn.classList.add('active');
-    }
-
-    function renderTable(data, containerId) {
-      if (!data || data.length === 0) {
-        document.getElementById(containerId).innerHTML = '<p>No hay datos disponibles</p>';
-        return;
-      }
-      // Ordenar por Total (si existe la columna)
-      if (data[0].Total) {
-        data.sort((a, b) => parseFloat(b.Total) - parseFloat(a.Total));
-      }
-      let html = '<table><thead><tr>';
-      Object.keys(data[0]).forEach(key => {
-        html += `<th>${key}</th>`;
-      });
-      html += '</tr></thead><tbody>';
-      data.forEach(row => {
-        html += '<tr>';
-        for (let key in row) {
-          html += `<td class="${key.toLowerCase()==='total'?'points':'name'}">${row[key]}</td>`;
+    Tabletop.init({
+      key: `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pubhtml`,
+      simpleSheet: true,
+      callback: function(data, tabletop) {
+        console.log("Datos cargados:", data); // Mira en la consola del navegador
+        if (data.length === 0) {
+          document.getElementById('output').innerHTML = "No se encontraron datos.";
+          return;
         }
-        html += '</tr>';
-      });
-      html += '</tbody></table>';
-      document.getElementById(containerId).innerHTML = html;
-    }
-
-    function loadData(sheetName, containerId) {
-      Tabletop.init({
-        key: `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pubhtml`,
-        simpleSheet: false,
-        callback: function(data) {
-          if (data[sheetName]) {
-            renderTable(data[sheetName].elements, containerId);
-          } else {
-            document.getElementById(containerId).innerHTML = '<p>No se encontró la hoja: '+sheetName+'</p>';
+        // Mostrar datos en HTML
+        let html = "<table border='1' style='margin:0 auto;'><tr>";
+        Object.keys(data[0]).forEach(key => {
+          html += `<th>${key}</th>`;
+        });
+        html += "</tr>";
+        data.forEach(row => {
+          html += "<tr>";
+          for (let key in row) {
+            html += `<td>${row[key]}</td>`;
           }
-        }
-      });
-    }
-
-    loadData(SHEET_1, 'primera');
-    loadData(SHEET_2, 'segunda');
+          html += "</tr>";
+        });
+        html += "</table>";
+        document.getElementById('output').innerHTML = html;
+      }
+    });
   </script>
 </body>
 </html>
