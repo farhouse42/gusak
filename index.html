@@ -61,6 +61,176 @@
 
     .ranking.active {
       display: block;
+      animation: fadeIn 0.6s ease;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      color: #80785C;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #333;
+    }
+
+    td.name {
+      text-align: left;
+    }
+
+    td.points {
+      text-align: right;
+      font-weight: bold;
+      color: #F4F0E3;
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    tbody tr:first-child td.name {
+      color: #FFD700;
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .ranking {
+        width: 90%;
+        padding: 15px;
+      }
+
+      td {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      .tab {
+        flex: 1 1 auto;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <img src="logo.png" alt="Güsak Logo" class="logo">
+
+  <!-- Pestañas -->
+  <div class="tabs">
+    <button class="tab active" onclick="showRanking('futbol', this)">⚽ Fútbol</button>
+    <button class="tab" onclick="showRanking('mus', this)">🃏 Mus</button>
+  </div>
+
+  <!-- Ranking Fútbol -->
+  <div id="futbol" class="ranking active">
+    <h2>⚽ Fútbol</h2>
+    <table>
+      <tbody id="tbody-futbol"></tbody>
+    </table>
+  </div>
+
+  <!-- Ranking Mus -->
+  <div id="mus" class="ranking">
+    <h2>🃏 Mus</h2>
+    <table>
+      <tbody id="tbody-mus"></tbody>
+    </table>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function showRanking(id, tabElement) {
+      const rankings = document.querySelectorAll('.ranking');
+      const tabs = document.querySelectorAll('.tab');
+
+      rankings.forEach(r => r.classList.remove('active'));
+      tabs.forEach(t => t.classList.remove('active'));
+
+      document.getElementById(id).classList.add('active');
+      tabElement.classList.add('active');
+    }
+  </script>
+
+  <script>
+    const urls = {
+      futbol: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS6FZZe3x0lW1-5EIl1J64CM087PlaEpSKGznZ8CNOFwFqZdpIN36zzz3pZAziH9SASn8cbe0-ZQ1zQ/pub?gid=0&single=true&output=csv",
+      mus: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS6FZZe3x0lW1-5EIl1J64CM087PlaEpSKGznZ8CNOFwFqZdpIN36zzz3pZAziH9SASn8cbe0-ZQ1zQ/pub?gid=744508119&single=true&output=csv"
+    };
+
+    function cargarRanking(url, tbodyId) {
+      fetch(url)
+        .then(res => res.text())
+        .then(data => {
+          const filas = data.trim().split("\n").slice(1);
+          const jugadores = filas.map(f => {
+            const [nombre, elo] = f.split(",");
+            return { nombre, elo: parseFloat(elo) };
+          });
+
+          jugadores.sort((a, b) => b.elo - a.elo);
+
+          const tbody = document.getElementById(tbodyId);
+          tbody.innerHTML = "";
+
+          jugadores.forEach((j, i) => {
+            const tr = document.createElement("tr");
+            let nombreConIcono = j.nombre;
+            if (i === 0) nombreConIcono += " 🏆";
+            tr.innerHTML = `
+              <td class="name">${nombreConIcono}</td>
+              <td class="points">${j.elo}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        });
+    }
+
+    cargarRanking(urls.futbol, "tbody-futbol");
+    cargarRanking(urls.mus, "tbody-mus");
+  </script>
+</body>
+</html>
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .tab:hover {
+      background-color: #9c9579;
+    }
+
+    .tab.active {
+      background-color: #F4F0E3;
+      color: #000000;
+    }
+
+    .ranking {
+      display: none;
+      max-width: 500px;
+      margin: 0 auto;
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+      border: 2px solid #80785C;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .ranking.active {
+      display: block;
     }
 
     h2 {
