@@ -199,15 +199,15 @@
           const filas = data.trim().split("\n").slice(1);
 
           const jugadores = filas.map(f => {
-            const [nombre, elo, pj, v, d, pct] = f.split(",");
+            const [nombre, elo, pct, pj, v, d] = f.split(",");
 
             return {
-              nombre,
-              elo: parseFloat(elo),
-              pj: parseInt(pj),
-              v: parseInt(v),
-              d: parseInt(d),
-              pct: parseFloat(pct)
+             nombre,
+             elo: parseFloat(elo),
+             pj: parseInt(pj),
+             v: parseInt(v),
+             d: parseInt(d),
+             pct: parseFloat(pct.replace(",", "."))
             };
           });
 
