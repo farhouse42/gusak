@@ -17,7 +17,7 @@
       text-align: center;
     }
 
-    img.logo {
+    .logo {
       max-width: 150px;
       margin: 10px auto 20px;
       display: block;
@@ -33,8 +33,220 @@
 
     .tab {
       padding: 10px 18px;
-      background-color: #80785C;
+      background-color: #333;
       border: none;
+      border-radius: 8px;
+      color: #FFFFFF;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab:hover {
+      background-color: #444;
+    }
+
+    .tab.active {
+      background-color: #F4F0E3;
+      color: #000000;
+    }
+
+    .ranking {
+      display: none;
+      max-width: 700px;
+      margin: 0 auto;
+      background: #0a0a0a;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #333;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+    }
+
+    .ranking.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      color: #80785C;
+      font-size: 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      padding: 12px;
+      border-bottom: 1px solid #333;
+      font-size: 13px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    td {
+      padding: 14px 10px;
+      border-bottom: 1px solid #1a1a1a;
+      font-size: 15px;
+    }
+
+    .name {
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .points {
+      text-align: center;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Resaltar al ganador */
+    tbody tr:first-child .name {
+      color: #FFD700;
+    }
+
+    /* Estilo para la columna ELO */
+    td:last-child {
+      font-weight: bold;
+      color: #F4F0E3;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .ranking { width: 100%; padding: 10px; }
+      th, td { font-size: 12px; padding: 8px 4px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <img src="logo.png" alt="Güsak Logo" class="logo">
+
+  <div class="tabs">
+    <button class="tab active" onclick="showRanking('futbol', this)">⚽ Fútbol</button>
+    <button class="tab" onclick="showRanking('mus', this)">🃏 Mus</button>
+  </div>
+
+  <div id="futbol" class="ranking active">
+    <h2>⚽ Fútbol</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:left">Jugador</th>
+          <th>PCT</th>
+          <th>PJ</th>
+          <th>V</th>
+          <th>D</th>
+          <th>ELO</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-futbol">
+        </tbody>
+    </table>
+  </div>
+
+  <div id="mus" class="ranking">
+    <h2>🃏 Mus</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:left">Jugador</th>
+          <th>PCT</th>
+          <th>PJ</th>
+          <th>V</th>
+          <th>D</th>
+          <th>ELO</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-mus">
+        </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Configuración de las URLs de Google Sheets (CSV)
+    const urls = {
+      futbol: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS6FZZe3x0lW1-5EIl1J64CM087PlaEpSKGznZ8CNOFwFqZdpIN36zzz3pZAziH9SASn8cbe0-ZQ1zQ/pub?gid=0&single=true&output=csv",
+      mus: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS6FZZe3x0lW1-5EIl1J64CM087PlaEpSKGznZ8CNOFwFqZdpIN36zzz3pZAziH9SASn8cbe0-ZQ1zQ/pub?gid=744508119&single=true&output=csv"
+    };
+
+    // Función para cambiar entre pestañas
+    function showRanking(id, tabElement) {
+      document.querySelectorAll('.ranking').forEach(r => r.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      tabElement.classList.add('active');
+    }
+
+    // Función principal para cargar y procesar los datos
+    function cargarRanking(url, tbodyId) {
+      fetch(url)
+        .then(res => res.text())
+        .then(data => {
+          // Dividir por líneas y saltar la cabecera
+          const filas = data.trim().split(/\r?\n/).slice(1);
+
+          const jugadores = filas.map(linea => {
+            const columnas = linea.split(",");
+            
+            return {
+              nombre: columnas[0] ? columnas[0].trim() : "",
+              elo: parseFloat(columnas[1]) || 0,
+              pct: parseFloat(columnas[2] ? columnas[2].replace(",", ".") : 0) || 0,
+              pj: parseInt(columnas[3]) || 0,
+              v: parseInt(columnas[4]) || 0,
+              d: parseInt(columnas[5]) || 0
+            };
+          });
+
+          // Ordenar por ELO de mayor a menor
+          jugadores.sort((a, b) => b.elo - a.elo);
+
+          const tbody = document.getElementById(tbodyId);
+          tbody.innerHTML = "";
+
+          jugadores.forEach((j, i) => {
+            if (!j.nombre || j.nombre === "") return;
+
+            const tr = document.createElement("tr");
+            let icono = (i === 0) ? " 🏆" : "";
+
+            tr.innerHTML = `
+              <td class="name">${j.nombre}${icono}</td>
+              <td class="points">${j.pct.toFixed(3)}</td>
+              <td class="points">${j.pj}</td>
+              <td class="points">${j.v}</td>
+              <td class="points">${j.d}</td>
+              <td class="points">${Math.round(j.elo)}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        })
+        .catch(err => {
+          console.error("Error cargando los datos de " + tbodyId, err);
+        });
+    }
+
+    // Iniciar carga al abrir la página
+    window.onload = () => {
+      cargarRanking(urls.futbol, "tbody-futbol");
+      cargarRanking(urls.mus, "tbody-mus");
+    };
+  </script>
+
+</body>
+</html>      border: none;
       border-radius: 8px;
       color: #FFFFFF;
       cursor: pointer;
