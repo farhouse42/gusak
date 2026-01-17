@@ -204,10 +204,10 @@
             return {
              nombre,
              elo: parseFloat(elo),
+             pct: parseFloat(pct.replace(",", "."),
              pj: parseInt(pj),
              v: parseInt(v),
-             d: parseInt(d),
-             pct: parseFloat(pct.replace(",", "."))
+             d: parseInt(d))
             };
           });
 
