@@ -378,20 +378,20 @@
             const pos = i + 1;
             const tr = document.createElement("tr");
 
-            tr.innerHTML = `
-              <td class="col-pos">${pos}</td>
-              <td class="col-name">
-                <div class="player-cell">
-                  ${avatarHTML(j.nombre)}
-                  <span>${j.nombre}</span>
-                </div>
-              </td>
-              <td class="col-num">${j.pct.toFixed(3)}</td>
-              <td class="col-num">${j.pj}</td>
-              <td class="col-num">${j.v}</td>
-              <td class="col-num">${j.d}</td>
-              <td class="col-elo">${Math.round(j.elo)}</td>
-            `;
+tr.innerHTML = `
+  <td class="col-pos">${pos}</td>
+  <td class="col-name">
+    <div class="player-cell">
+      ${avatarHTML(j.nombre)}
+      <span>${j.nombre}</span>
+    </div>
+  </td>
+  <td class="col-elo">${Math.round(j.elo)}</td>
+  <td class="col-num">${j.pct.toFixed(3)}</td>
+  <td class="col-num">${j.pj}</td>
+  <td class="col-num">${j.v}</td>
+  <td class="col-num">${j.d}</td>
+`;
             tbody.appendChild(tr);
           });
         })
