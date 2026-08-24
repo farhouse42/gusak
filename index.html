@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Museo — Ranking ELO Mus</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
   :root{
     --bg: #10161f;
@@ -21,15 +23,27 @@
     --danger-strong: #e0715a;
     --radius: 10px;
   }
+
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--bg);}
+
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--bg);
+  }
+
   body{
     font-family:'Inter',sans-serif;
     color:var(--ink);
     min-height:100vh;
     padding:0 0 60px 0;
   }
-  .wrap{max-width:760px;margin:0 auto;padding:28px 18px 0;}
+
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:28px 18px 0;
+  }
 
   header.hero{
     display:flex;
@@ -39,6 +53,7 @@
     border-bottom:1px solid var(--line);
     margin-bottom:26px;
   }
+
   .eyebrow{
     font-size:11px;
     letter-spacing:.16em;
@@ -46,6 +61,7 @@
     color:var(--teal);
     font-weight:600;
   }
+
   h1{
     font-family:'Space Grotesk',sans-serif;
     font-size:32px;
@@ -53,10 +69,17 @@
     margin:2px 0 0;
     letter-spacing:-0.01em;
   }
+
   h1 span{color:var(--gold);}
-  .sub{color:var(--ink-muted); font-size:13.5px; margin-top:2px;}
+
+  .sub{
+    color:var(--ink-muted);
+    font-size:13.5px;
+    margin-top:2px;
+  }
 
   section{margin-bottom:34px;}
+
   .section-title{
     font-family:'Space Grotesk',sans-serif;
     font-size:13px;
@@ -68,6 +91,7 @@
     align-items:baseline;
     gap:8px;
   }
+
   .section-title .count{
     color:var(--gold-dim);
     font-family:'Inter',sans-serif;
@@ -77,12 +101,14 @@
   }
 
   /* Leaderboard */
+
   .board{
     background:var(--panel);
     border:1px solid var(--line);
     border-radius:var(--radius);
     overflow:hidden;
   }
+
   .board-head{
     display:grid;
     grid-template-columns:26px 30px 1fr 46px auto;
@@ -96,7 +122,12 @@
     color:var(--ink-muted);
     font-weight:600;
   }
-  .board-head .h-pct, .board-head .h-elo{text-align:right;}
+
+  .board-head .h-pct,
+  .board-head .h-elo{
+    text-align:right;
+  }
+
   .row{
     display:grid;
     grid-template-columns:26px 30px 1fr 46px auto;
@@ -105,7 +136,9 @@
     padding:11px 14px;
     border-bottom:1px solid var(--line);
   }
+
   .row:last-child{border-bottom:none;}
+
   .rank{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
@@ -113,11 +146,14 @@
     color:var(--ink-muted);
     text-align:center;
   }
+
   .row:nth-child(1) .rank{color:var(--gold);}
   .row:nth-child(2) .rank{color:#c9ccd1;}
   .row:nth-child(3) .rank{color:#b5895a;}
+
   .avatar{
-    width:28px; height:28px;
+    width:28px;
+    height:28px;
     border-radius:50%;
     display:flex;
     align-items:center;
@@ -127,14 +163,25 @@
     font-weight:700;
     flex-shrink:0;
   }
-  .name{font-weight:600; font-size:14.5px;}
-  .record{color:var(--ink-muted); font-size:11.5px; margin-top:1px;}
+
+  .name{
+    font-weight:600;
+    font-size:14.5px;
+  }
+
+  .record{
+    color:var(--ink-muted);
+    font-size:11.5px;
+    margin-top:1px;
+  }
+
   .pct{
     font-size:12.5px;
     color:var(--ink-muted);
     text-align:right;
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric:tabular-nums;
   }
+
   .elo{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
@@ -142,8 +189,9 @@
     color:var(--gold);
     min-width:52px;
     text-align:right;
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric:tabular-nums;
   }
+
   .empty{
     padding:26px 14px;
     text-align:center;
@@ -151,13 +199,15 @@
     font-size:13.5px;
   }
 
-  /* Pending (below minimum) */
+  /* Pending */
+
   .pending{
     background:var(--panel);
     border:1px solid var(--line);
     border-radius:var(--radius);
     padding:4px 14px;
   }
+
   .pending-row{
     display:flex;
     justify-content:space-between;
@@ -166,11 +216,18 @@
     border-bottom:1px solid var(--line);
     font-size:13.5px;
   }
+
   .pending-row:last-child{border-bottom:none;}
+
   .pending-row .pname{font-weight:600;}
-  .pending-row .pprog{color:var(--ink-muted); font-variant-numeric:tabular-nums;}
+
+  .pending-row .pprog{
+    color:var(--ink-muted);
+    font-variant-numeric:tabular-nums;
+  }
 
   /* Form */
+
   form.match-form{
     background:var(--panel);
     border:1px solid var(--line);
@@ -180,12 +237,14 @@
     flex-direction:column;
     gap:14px;
   }
+
   .team-block{
     border:1px solid var(--line);
     border-radius:8px;
     padding:12px;
     background:var(--panel-2);
   }
+
   .team-label{
     font-family:'Space Grotesk',sans-serif;
     font-size:12px;
@@ -194,10 +253,22 @@
     text-transform:uppercase;
     margin-bottom:8px;
   }
+
   .team-label.a{color:var(--teal);}
   .team-label.b{color:var(--gold);}
-  .team-pair{display:flex; gap:8px;}
-  .team-pair .field{flex:1; display:flex; flex-direction:column; gap:6px;}
+
+  .team-pair{
+    display:flex;
+    gap:8px;
+  }
+
+  .team-pair .field{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+
   .vs-divider{
     text-align:center;
     color:var(--ink-muted);
@@ -205,6 +276,7 @@
     font-size:12px;
     font-weight:600;
   }
+
   label{
     display:block;
     font-size:11.5px;
@@ -212,7 +284,10 @@
     margin-bottom:5px;
     letter-spacing:.02em;
   }
-  input[type="text"], input[type="date"], select{
+
+  input[type="text"],
+  input[type="date"],
+  select{
     width:100%;
     background:var(--bg);
     border:1px solid var(--line);
@@ -222,6 +297,7 @@
     font-size:14.5px;
     font-family:'Inter',sans-serif;
   }
+
   select{
     appearance:none;
     -webkit-appearance:none;
@@ -230,9 +306,20 @@
     background-position:right 10px center;
     padding-right:30px;
   }
+
   select:invalid{color:var(--ink-muted);}
-  input:focus, select:focus{outline:2px solid var(--teal); outline-offset:1px;}
-  .winner-row{display:flex; gap:8px;}
+
+  input:focus,
+  select:focus{
+    outline:2px solid var(--teal);
+    outline-offset:1px;
+  }
+
+  .winner-row{
+    display:flex;
+    gap:8px;
+  }
+
   .winner-btn{
     flex:1;
     padding:10px;
@@ -245,8 +332,19 @@
     cursor:pointer;
     text-align:center;
   }
-  .winner-btn.active-a{border-color:var(--teal); color:var(--teal); background:#132321;}
-  .winner-btn.active-b{border-color:var(--gold); color:var(--gold); background:#2a2415;}
+
+  .winner-btn.active-a{
+    border-color:var(--teal);
+    color:var(--teal);
+    background:#132321;
+  }
+
+  .winner-btn.active-b{
+    border-color:var(--gold);
+    color:var(--gold);
+    background:#2a2415;
+  }
+
   .submit-btn{
     margin-top:2px;
     background:var(--teal);
@@ -259,272 +357,2204 @@
     cursor:pointer;
     font-family:'Inter',sans-serif;
   }
-  .submit-btn:disabled{opacity:.5; cursor:default;}
-  .form-msg{font-size:12.5px; color:var(--danger-strong); min-height:16px;}
+
+  .submit-btn:disabled{
+    opacity:.5;
+    cursor:default;
+  }
+
+  .form-msg{
+    font-size:12.5px;
+    color:var(--danger-strong);
+    min-height:16px;
+  }
 
   /* History */
-< truncated lines 266-571 >
-    const RB = (ratings[m.teamB[0]] + ratings[m.teamB[1]]) / 2;
-    const EA = 1/(1+Math.pow(10, (RB-RA)/400));
-    const EB = 1 - EA;
-    const SA = m.winner === 'A' ? 1 : 0;
-    const SB = 1 - SA;
 
-    const deltaA = Math.round(K*(SA-EA));
-    const deltaB = Math.round(K*(SB-EB));
-
-    m.teamA.forEach(name=> ratings[name] += deltaA);
-    m.teamB.forEach(name=> ratings[name] += deltaB);
-
-    m.teamA.forEach(name=>{ stats[name].played++; if(m.winner==='A') stats[name].wins++; else stats[name].losses++; });
-    m.teamB.forEach(name=>{ stats[name].played++; if(m.winner==='B') stats[name].wins++; else stats[name].losses++; });
-
-    perMatchDelta[m.id] = { deltaA, deltaB };
-  });
-
-  const all = Object.keys(ratings).map(name=>({
-    name,
-    rating: Math.round(ratings[name]),
-    played: stats[name].played,
-    wins: stats[name].wins,
-    losses: stats[name].losses
-  }));
-
-  const ranked = all.filter(p=>p.played >= MIN_GAMES).sort((a,b)=>b.rating-a.rating);
-  const pending = all.filter(p=>p.played < MIN_GAMES).sort((a,b)=>b.played-a.played);
-
-  return { ranked, pending, perMatchDelta, allNames: Object.keys(ratings) };
-}
-
-function populateSelect(selectEl, names){
-  const prev = selectEl.value;
-  const opts = ['<option value="">-- Elegir --</option>']
-    .concat(names.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`))
-    .concat([`<option value="${OTHER_VALUE}">Otro (jugador nuevo)</option>`]);
-  selectEl.innerHTML = opts.join('');
-  // conservar selección previa si el jugador sigue existiendo
-  if(prev && [...selectEl.options].some(o=>o.value===prev)){
-    selectEl.value = prev;
+  .hist-item{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:12px 14px;
+    margin-bottom:8px;
   }
-}
 
-function renderPlayersSelects(names){
-  knownPlayers = [...names].sort((a,b)=>a.localeCompare(b,'es'));
-  SLOTS.forEach(slot=>{
-    populateSelect(document.getElementById(slot+'-select'), knownPlayers);
-  });
-}
-
-function getSlotValue(slot){
-  const select = document.getElementById(slot+'-select');
-  const other = document.getElementById(slot+'-other');
-  if(select.value === OTHER_VALUE){
-    return other.value.trim();
+  .hist-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
   }
-  return select.value.trim();
-}
 
-// alternar el input de texto "otro" según el select
-SLOTS.forEach(slot=>{
-  const select = document.getElementById(slot+'-select');
-  const other = document.getElementById(slot+'-other');
-  select.addEventListener('change', ()=>{
-    if(select.value === OTHER_VALUE){
-      other.style.display = 'block';
-      other.focus();
-    } else {
-      other.style.display = 'none';
-      other.value = '';
+  .hist-main{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+
+  .hist-date{
+    font-size:11px;
+    color:var(--ink-muted);
+  }
+
+  .hist-match{
+    font-size:14px;
+    font-weight:600;
+    line-height:1.4;
+  }
+
+  .hist-match .win{color:var(--gold);}
+
+  .hist-match .lose{
+    color:var(--ink-muted);
+    font-weight:400;
+  }
+
+  .del-btn{
+    background:none;
+    border:1px solid var(--line);
+    color:var(--ink-muted);
+    padding:6px 10px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:11.5px;
+    font-weight:600;
+    flex-shrink:0;
+    white-space:nowrap;
+  }
+
+  .del-btn:hover:not(:disabled){
+    border-color:var(--danger-strong);
+    color:var(--danger-strong);
+  }
+
+  .del-btn:disabled{
+    opacity:.55;
+    cursor:default;
+  }
+
+  .vote-dots{
+    display:flex;
+    gap:4px;
+    margin-top:8px;
+  }
+
+  .vote-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--line);
+  }
+
+  .vote-dot.filled{
+    background:var(--danger-strong);
+  }
+
+  .loading{
+    color:var(--ink-muted);
+    font-size:13px;
+    padding:14px;
+  }
+
+  .toast{
+    position:fixed;
+    bottom:18px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    padding:9px 16px;
+    border-radius:20px;
+    font-size:13px;
+    color:var(--ink);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease;
+    max-width:88%;
+    text-align:center;
+    z-index:50;
+  }
+
+  .toast.show{opacity:1;}
+
+  .debug-box{
+    margin-top:6px;
+    font-size:11px;
+    color:var(--danger-strong);
+    background:#2a1613;
+    border:1px solid var(--danger-strong);
+    border-radius:7px;
+    padding:8px 10px;
+    display:none;
+    word-break:break-word;
+  }
+
+  .debug-box.show{display:block;}
+
+  @media(max-width:560px){
+    .wrap{
+      padding-left:12px;
+      padding-right:12px;
     }
-  });
-});
 
-function renderBoard(ranked){
-  const board = document.getElementById('board');
-  document.getElementById('board-count').textContent = ranked.length ? `· ${ranked.length} jugadores` : '';
-  if(ranked.length === 0){
-    board.innerHTML = `<div class="empty">Nadie llega todavía a las ${MIN_GAMES} partidas mínimas.</div>`;
-    return;
+    .board-head,
+    .row{
+      grid-template-columns:24px 28px 1fr 42px 50px;
+      gap:7px;
+      padding-left:10px;
+      padding-right:10px;
+    }
+
+    .name{
+      font-size:13.5px;
+    }
+
+    .elo{
+      font-size:17px;
+      min-width:0;
+    }
+
+    .pct{
+      font-size:11.5px;
+    }
+
+    .team-pair{
+      flex-direction:column;
+    }
   }
-  board.innerHTML = ranked.map((p,i)=>{
-    const pct = p.played > 0 ? (p.wins / p.played) : 0;
-    return `
-    <div class="row">
-      <div class="rank">${i+1}</div>
-      ${avatarHTML(p.name)}
-      <div>
-        <div class="name">${escapeHtml(p.name)}</div>
-        <div class="record">${p.played} partidas · ${p.wins}V ${p.losses}D</div>
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Kuadrilla · Mus · 2 contra 2</div>
+
+    <h1>El <span>Museo</span></h1>
+
+    <div class="sub">
+      Ranking ELO del mus. Hace falta un mínimo de
+      <strong id="min-label"></strong>
+      partidas jugadas para aparecer en la clasificación.
+    </div>
+  </header>
+
+  <section>
+
+    <div class="section-title">
+      Clasificación
+      <span class="count" id="board-count"></span>
+    </div>
+
+    <div class="board">
+
+      <div class="board-head">
+        <span></span>
+        <span></span>
+        <span>Jugador</span>
+        <span class="h-pct">Pct</span>
+        <span class="h-elo">Elo</span>
       </div>
-      <div class="pct">${pct.toFixed(3)}</div>
-      <div class="elo">${p.rating}</div>
-    </div>
-  `;}).join('');
-}
 
-function renderPending(pending){
-  const section = document.getElementById('pending-section');
-  const box = document.getElementById('pending');
-  document.getElementById('pending-count').textContent = pending.length ? `· ${pending.length}` : '';
-  if(pending.length === 0){ section.style.display = 'none'; return; }
-  section.style.display = 'block';
-  box.innerHTML = pending.map(p=>`
-    <div class="pending-row">
-      <span class="pname">${escapeHtml(p.name)}</span>
-      <span class="pprog">${p.played}/${MIN_GAMES}</span>
-    </div>
-  `).join('');
-}
+      <div id="board">
+        <div class="loading">Cargando ranking…</div>
+      </div>
 
-function renderHistory(perMatchDelta){
-  const container = document.getElementById('history');
-  const ordered = [...sortedMatches()].reverse();
-  document.getElementById('hist-count').textContent = ordered.length ? `· ${ordered.length} partidas` : '';
-  if(ordered.length === 0){
-    container.innerHTML = '<div class="empty">Sin partidas todavía.</div>';
-    return;
+    </div>
+
+  </section>
+
+  <section id="pending-section" style="display:none;">
+
+    <div class="section-title">
+      Aún no llegan al mínimo
+      <span class="count" id="pending-count"></span>
+    </div>
+
+    <div class="pending" id="pending"></div>
+
+  </section>
+
+  <section>
+
+    <div class="section-title">
+      Añadir partida (2 vs 2)
+    </div>
+
+    <form class="match-form" id="match-form">
+
+      <div class="team-block">
+
+        <div class="team-label a">
+          Pareja A
+        </div>
+
+        <div class="team-pair">
+
+          <div class="field">
+            <select id="a1-select" class="player-select" data-slot="a1"></select>
+
+            <input
+              type="text"
+              id="a1-other"
+              class="player-other"
+              autocomplete="off"
+              placeholder="Nombre del jugador nuevo"
+              style="display:none;"
+            >
+          </div>
+
+          <div class="field">
+            <select id="a2-select" class="player-select" data-slot="a2"></select>
+
+            <input
+              type="text"
+              id="a2-other"
+              class="player-other"
+              autocomplete="off"
+              placeholder="Nombre del jugador nuevo"
+              style="display:none;"
+            >
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="vs-divider">
+        VS
+      </div>
+
+      <div class="team-block">
+
+        <div class="team-label b">
+          Pareja B
+        </div>
+
+        <div class="team-pair">
+
+          <div class="field">
+            <select id="b1-select" class="player-select" data-slot="b1"></select>
+
+            <input
+              type="text"
+              id="b1-other"
+              class="player-other"
+              autocomplete="off"
+              placeholder="Nombre del jugador nuevo"
+              style="display:none;"
+            >
+          </div>
+
+          <div class="field">
+            <select id="b2-select" class="player-select" data-slot="b2"></select>
+
+            <input
+              type="text"
+              id="b2-other"
+              class="player-other"
+              autocomplete="off"
+              placeholder="Nombre del jugador nuevo"
+              style="display:none;"
+            >
+          </div>
+
+        </div>
+
+      </div>
+
+      <div>
+
+        <label>
+          ¿Qué pareja ganó?
+        </label>
+
+        <div class="winner-row">
+
+          <div class="winner-btn" id="winA" data-winner="A">
+            Pareja A
+          </div>
+
+          <div class="winner-btn" id="winB" data-winner="B">
+            Pareja B
+          </div>
+
+        </div>
+
+      </div>
+
+      <div>
+
+        <label for="matchDate">
+          Fecha
+        </label>
+
+        <input type="date" id="matchDate">
+
+      </div>
+
+      <div class="form-msg" id="form-msg"></div>
+
+      <div class="debug-box" id="debug-box"></div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        id="submit-btn"
+      >
+        Añadir partida
+      </button>
+
+    </form>
+
+  </section>
+
+  <section>
+
+    <div class="section-title">
+      Historial
+      <span class="count" id="hist-count"></span>
+    </div>
+
+    <div id="history">
+      <div class="loading">
+        Cargando historial…
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+<!-- =========================================================
+     FIREBASE
+========================================================= -->
+
+<script type="module">
+
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    onSnapshot,
+    query,
+    orderBy,
+    runTransaction,
+    doc
   }
-  container.innerHTML = ordered.map(m=>{
-    const d = perMatchDelta[m.id] || {deltaA:0, deltaB:0};
-    const votes = m.deleteVotes || 0;
-    const iVoted = myVotes.includes(m.id);
-    const winTeam = m.winner === 'A' ? m.teamA : m.teamB;
-    const loseTeam = m.winner === 'A' ? m.teamB : m.teamA;
-    const winDelta = m.winner === 'A' ? d.deltaA : d.deltaB;
-    const loseDelta = m.winner === 'A' ? d.deltaB : d.deltaA;
-    const dots = Array.from({length: VOTES_NEEDED}).map((_,i)=>`<div class="vote-dot ${i < votes ? 'filled' : ''}"></div>`).join('');
+  from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+  /* =========================================================
+     CONFIGURACIÓN FIREBASE
+  ========================================================= */
+
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyBQ2VL-9ofnDgvKCmZ3RT-ilm1BxL6etnE",
+
+    authDomain: "elo-gusak.firebaseapp.com",
+
+    projectId: "elo-gusak",
+
+    storageBucket: "elo-gusak.firebasestorage.app",
+
+    messagingSenderId: "1066034030489",
+
+    appId: "1:1066034030489:web:9964d084507abee55b1508",
+
+    measurementId: "G-FVKYS9W903"
+
+  };
+
+
+  /* =========================================================
+     INICIALIZAR FIREBASE
+  ========================================================= */
+
+  const app = initializeApp(firebaseConfig);
+
+  const db = getFirestore(app);
+
+
+  /* =========================================================
+     CONFIGURACIÓN DEL RANKING
+  ========================================================= */
+
+  const K = 32;
+
+  const START_RATING = 1000;
+
+  const MIN_GAMES = 20;
+
+  const VOTES_NEEDED = 3;
+
+  const OTHER_VALUE = '__other__';
+
+  const SLOTS = ['a1','a2','b1','b2'];
+
+
+  document.getElementById('min-label').textContent = MIN_GAMES;
+
+
+  /* =========================================================
+     JUGADORES BASE
+  ========================================================= */
+
+  const BASE_PLAYERS = [
+
+    {
+      name: "Garay",
+      rating: 1380,
+      played: 115,
+      wins: 62,
+      losses: 53
+    },
+
+    {
+      name: "Salva",
+      rating: 1391,
+      played: 98,
+      wins: 54,
+      losses: 44
+    },
+
+    {
+      name: "Carre",
+      rating: 1368,
+      played: 96,
+      wins: 49,
+      losses: 47
+    },
+
+    {
+      name: "Rio",
+      rating: 1514,
+      played: 78,
+      wins: 51,
+      losses: 27
+    },
+
+    {
+      name: "Josu",
+      rating: 1161,
+      played: 72,
+      wins: 31,
+      losses: 41
+    },
+
+    {
+      name: "Ander",
+      rating: 1368,
+      played: 60,
+      wins: 31,
+      losses: 29
+    },
+
+    {
+      name: "Enaitz",
+      rating: 1252,
+      played: 49,
+      wins: 25,
+      losses: 24
+    },
+
+    {
+      name: "Danel",
+      rating: 1197,
+      played: 48,
+      wins: 18,
+      losses: 30
+    },
+
+    {
+      name: "Bilbao",
+      rating: 1272,
+      played: 38,
+      wins: 20,
+      losses: 18
+    },
+
+    {
+      name: "Markel",
+      rating: 1364,
+      played: 35,
+      wins: 17,
+      losses: 18
+    },
+
+    {
+      name: "Rodri",
+      rating: 1287,
+      played: 27,
+      wins: 14,
+      losses: 13
+    },
+
+    {
+      name: "Sertu",
+      rating: 1023,
+      played: 16,
+      wins: 5,
+      losses: 11
+    },
+
+    {
+      name: "Aimar",
+      rating: 1439,
+      played: 13,
+      wins: 7,
+      losses: 6
+    },
+
+    {
+      name: "Almi",
+      rating: 1476,
+      played: 11,
+      wins: 5,
+      losses: 6
+    },
+
+    {
+      name: "Melo",
+      rating: 1270,
+      played: 9,
+      wins: 5,
+      losses: 4
+    },
+
+    {
+      name: "Peio",
+      rating: 1029,
+      played: 8,
+      wins: 3,
+      losses: 5
+    },
+
+    {
+      name: "Ruiz",
+      rating: 1111,
+      played: 7,
+      wins: 2,
+      losses: 5
+    },
+
+    {
+      name: "Ibon",
+      rating: 1085,
+      played: 1,
+      wins: 0,
+      losses: 1
+    }
+
+  ];
+
+
+  /* =========================================================
+     AVATARES
+  ========================================================= */
+
+  const BASE_AVATARS = {
+
+    'Ander':  { bg: '#FF4F00', color: '#000000' },
+
+    'Rodri':  { bg: '#7B0024', color: '#FFFFFF' },
+
+    'Sertu':  { bg: '#003B7B', color: '#FDB913' },
+
+    'Danel':  { bg: '#4D3625', color: '#FFFFFF' },
+
+    'Josu':   { bg: '#008852', color: '#FFFFFF' },
+
+    'Markel': { bg: '#FDE100', color: '#000000' },
+
+    'Ibon':   { bg: '#A0CE4E', color: '#000000' },
+
+    'Rio':    { bg: '#F7A1B5', color: '#000000' },
+
+    'Salva':  { bg: '#1D1D1B', color: '#E51D87' },
+
+    'Carre':  { bg: '#00D2BE', color: '#000000' },
+
+    'Melo':   { bg: '#008929', color: '#FFFFFF' },
+
+    'Garay':  { bg: '#4B2E83', color: '#FFFFFF' },
+
+    'Enaitz': { bg: '#004812', color: '#EAE827' },
+
+    'Bilbao': { bg: '#EE2523', color: '#FFFFFF' },
+
+    'Aimar':  { bg: '#003DA5', color: '#FFFFFF' },
+
+    'Almi':   { bg: '#C8102E', color: '#FFFFFF' },
+
+    'Peio':   { bg: '#6F42C1', color: '#FFFFFF' },
+
+    'Ruiz':   { bg: '#0B5FA5', color: '#FFFFFF' }
+
+  };
+
+
+  const FALLBACK_PALETTE = [
+
+    { bg:'#2E6F76', color:'#FFFFFF' },
+
+    { bg:'#8C4B2F', color:'#FFFFFF' },
+
+    { bg:'#5B4B8A', color:'#FFFFFF' },
+
+    { bg:'#B0862B', color:'#000000' },
+
+    { bg:'#3F6B3A', color:'#FFFFFF' },
+
+    { bg:'#A13F5C', color:'#FFFFFF' }
+
+  ];
+
+
+  function avatarColor(name){
+
+    if(BASE_AVATARS[name]){
+      return BASE_AVATARS[name];
+    }
+
+    let hash = 0;
+
+    for(let i=0; i<name.length; i++){
+
+      hash =
+        name.charCodeAt(i) +
+        ((hash << 5) - hash);
+
+    }
+
+    return FALLBACK_PALETTE[
+      Math.abs(hash) % FALLBACK_PALETTE.length
+    ];
+
+  }
+
+
+  function initials(name){
+
+    return name
+      .trim()
+      .slice(0,2)
+      .toUpperCase();
+
+  }
+
+
+  function avatarHTML(name){
+
+    const c = avatarColor(name);
 
     return `
-      <div class="hist-item">
-        <div class="hist-top">
-          <div class="hist-main">
-            <div class="hist-date">${formatDate(m.date)}</div>
-            <div class="hist-match">
-              <span class="win">${escapeHtml(winTeam.join(' y '))}</span> (+${winDelta})
-              &nbsp;ganaron a&nbsp;
-              <span class="lose">${escapeHtml(loseTeam.join(' y '))}</span> (${loseDelta})
-            </div>
-          </div>
-          <button class="del-btn" data-id="${m.id}" ${iVoted ? 'disabled' : ''}>
-            ${iVoted ? `Votado (${votes}/${VOTES_NEEDED})` : `Eliminar (${votes}/${VOTES_NEEDED})`}
-          </button>
-        </div>
-        <div class="vote-dots">${dots}</div>
+      <div
+        class="avatar"
+        style="background:${c.bg};color:${c.color}"
+      >
+        ${initials(name)}
       </div>
     `;
-  }).join('');
 
-  container.querySelectorAll('.del-btn').forEach(btn=>{
-    btn.addEventListener('click', async ()=>{
-      const id = btn.getAttribute('data-id');
-      if(myVotes.includes(id)) return;
-      const m = matches.find(x=>x.id === id);
-      if(!m) return;
-      m.deleteVotes = (m.deleteVotes || 0) + 1;
+  }
+
+
+  /* =========================================================
+     VARIABLES
+  ========================================================= */
+
+  let matches = [];
+
+  let selectedWinner = null;
+
+  let myVotes = [];
+
+  let knownPlayers = [];
+
+  let unsubscribeMatches = null;
+
+
+  /* =========================================================
+     FECHA
+  ========================================================= */
+
+  function todayISO(){
+
+    const d = new Date();
+
+    const year = d.getFullYear();
+
+    const month =
+      String(d.getMonth() + 1).padStart(2,'0');
+
+    const day =
+      String(d.getDate()).padStart(2,'0');
+
+    return `${year}-${month}-${day}`;
+
+  }
+
+
+  document.getElementById('matchDate').value = todayISO();
+
+
+  /* =========================================================
+     TOAST
+  ========================================================= */
+
+  function showToast(msg){
+
+    const t =
+      document.getElementById('toast');
+
+    t.textContent = msg;
+
+    t.classList.add('show');
+
+    setTimeout(
+      () => t.classList.remove('show'),
+      2600
+    );
+
+  }
+
+
+  /* =========================================================
+     DEBUG
+  ========================================================= */
+
+  function showDebug(text){
+
+    const box =
+      document.getElementById('debug-box');
+
+    if(!text){
+
+      box.classList.remove('show');
+
+      box.textContent = '';
+
+      return;
+
+    }
+
+    box.textContent =
+      'Detalle técnico: ' + text;
+
+    box.classList.add('show');
+
+  }
+
+
+  /* =========================================================
+     CARGAR PARTIDAS DESDE FIRESTORE
+  ========================================================= */
+
+  function startRealtimeListener(){
+
+    try{
+
+      const matchesRef =
+        collection(db,'matches');
+
+      const q =
+        query(
+          matchesRef,
+          orderBy('date','asc')
+        );
+
+
+      unsubscribeMatches =
+        onSnapshot(
+          q,
+
+          snapshot => {
+
+            matches =
+              snapshot.docs.map(
+                item => ({
+                  id: item.id,
+                  ...item.data()
+                })
+              );
+
+            renderAll();
+
+          },
+
+          error => {
+
+            console.error(
+              'Error leyendo Firestore:',
+              error
+            );
+
+            showDebug(
+              error.message ||
+              'No se pudieron cargar las partidas desde Firebase.'
+            );
+
+            showToast(
+              'No se pudieron cargar las partidas.'
+            );
+
+          }
+
+        );
+
+    }catch(e){
+
+      console.error(e);
+
+      showDebug(
+        e.message ||
+        'Error iniciando Firebase.'
+      );
+
+    }
+
+  }
+
+
+  /* =========================================================
+     AÑADIR PARTIDA A FIRESTORE
+  ========================================================= */
+
+  async function saveMatch(match){
+
+    try{
+
+      const matchesRef =
+        collection(db,'matches');
+
+      await addDoc(
+        matchesRef,
+        match
+      );
+
+      return true;
+
+    }catch(e){
+
+      console.error(
+        'Error guardando partida:',
+        e
+      );
+
+      showDebug(
+        e.message ||
+        'Error guardando la partida en Firebase.'
+      );
+
+      showToast(
+        'Error al guardar la partida.'
+      );
+
+      return false;
+
+    }
+
+  }
+
+
+  /* =========================================================
+     VOTO PARA ELIMINAR PARTIDA
+  ========================================================= */
+
+  async function voteDeleteMatch(id){
+
+    if(myVotes.includes(id)){
+      return;
+    }
+
+
+    try{
+
+      const matchRef =
+        doc(db,'matches',id);
+
+
+      await runTransaction(
+        db,
+        async transaction => {
+
+          const snapshot =
+            await transaction.get(matchRef);
+
+
+          if(!snapshot.exists()){
+            return;
+          }
+
+
+          const data =
+            snapshot.data();
+
+
+          const currentVotes =
+            Number(data.deleteVotes || 0);
+
+
+          const newVotes =
+            currentVotes + 1;
+
+
+          if(newVotes >= VOTES_NEEDED){
+
+            transaction.delete(matchRef);
+
+          }else{
+
+            transaction.update(
+              matchRef,
+              {
+                deleteVotes:newVotes
+              }
+            );
+
+          }
+
+        }
+      );
+
+
       myVotes.push(id);
 
-      if(m.deleteVotes >= VOTES_NEEDED){
-        matches = matches.filter(x=>x.id !== id);
+      localStorage.setItem(
+        'museo-elo:my-votes',
+        JSON.stringify(myVotes)
+      );
+
+
+      const match =
+        matches.find(
+          m => m.id === id
+        );
+
+
+      if(
+        match &&
+        (match.deleteVotes || 0) + 1 >= VOTES_NEEDED
+      ){
+
+        showToast(
+          'Partida eliminada'
+        );
+
+      }else{
+
+        showToast(
+          'Voto registrado'
+        );
+
       }
-      const ok = await saveMatches();
-      await saveMyVotes();
-      if(ok){
-        renderAll();
-        showToast(m.deleteVotes >= VOTES_NEEDED && !matches.find(x=>x.id===id) ? 'Partida eliminada' : `Voto registrado (${Math.min(m.deleteVotes,VOTES_NEEDED)}/${VOTES_NEEDED})`);
+
+
+    }catch(e){
+
+      console.error(
+        'Error registrando voto:',
+        e
+      );
+
+      showDebug(
+        e.message ||
+        'Error registrando el voto.'
+      );
+
+      showToast(
+        'No se pudo registrar el voto.'
+      );
+
+    }
+
+  }
+
+
+  /* =========================================================
+     CARGAR VOTOS DE ESTE DISPOSITIVO
+  ========================================================= */
+
+  function loadMyVotes(){
+
+    try{
+
+      const saved =
+        localStorage.getItem(
+          'museo-elo:my-votes'
+        );
+
+      myVotes =
+        saved
+          ? JSON.parse(saved)
+          : [];
+
+      if(!Array.isArray(myVotes)){
+        myVotes = [];
       }
-    });
-  });
-}
 
-function formatDate(iso){
-  const [y,m,d] = iso.split('-');
-  return `${d}/${m}/${y}`;
-}
+    }catch(e){
 
-function escapeHtml(str){
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
+      myVotes = [];
 
-function renderAll(){
-  const { ranked, pending, perMatchDelta, allNames } = computeStandings();
-  renderPlayersSelects(allNames);
-  renderBoard(ranked);
-  renderPending(pending);
-  renderHistory(perMatchDelta);
-}
+    }
 
-document.getElementById('winA').addEventListener('click', ()=>{
-  selectedWinner = 'A';
-  document.getElementById('winA').classList.add('active-a');
-  document.getElementById('winB').classList.remove('active-b');
-});
-document.getElementById('winB').addEventListener('click', ()=>{
-  selectedWinner = 'B';
-  document.getElementById('winB').classList.add('active-b');
-  document.getElementById('winA').classList.remove('active-a');
-});
-
-document.getElementById('match-form').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const msg = document.getElementById('form-msg');
-  msg.textContent = '';
-  showDebug(null);
-
-  const a1 = getSlotValue('a1');
-  const a2 = getSlotValue('a2');
-  const b1 = getSlotValue('b1');
-  const b2 = getSlotValue('b2');
-  const date = document.getElementById('matchDate').value || todayISO();
-
-  if(!a1 || !a2 || !b1 || !b2){ msg.textContent = 'Rellena los 4 jugadores.'; return; }
-  const allNamesLower = [a1,a2,b1,b2].map(n=>n.toLowerCase());
-  if(new Set(allNamesLower).size !== 4){ msg.textContent = 'Los 4 jugadores deben ser distintos.'; return; }
-  if(!selectedWinner){ msg.textContent = 'Marca qué pareja ha ganado.'; return; }
-
-  const submitBtn = document.getElementById('submit-btn');
-  submitBtn.disabled = true;
-
-  const maxSeq = matches.reduce((max,m)=>Math.max(max, m.seq||0), 0);
-  const newMatch = {
-    id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
-    seq: maxSeq + 1,
-    date,
-    teamA: [a1, a2],
-    teamB: [b1, b2],
-    winner: selectedWinner,
-    deleteVotes: 0
-  };
-  matches.push(newMatch);
-
-  const ok = await saveMatches();
-  submitBtn.disabled = false;
-  if(ok){
-    SLOTS.forEach(slot=>{
-      document.getElementById(slot+'-select').value = '';
-      document.getElementById(slot+'-other').value = '';
-      document.getElementById(slot+'-other').style.display = 'none';
-    });
-    document.getElementById('matchDate').value = todayISO();
-    selectedWinner = null;
-    document.getElementById('winA').classList.remove('active-a');
-    document.getElementById('winB').classList.remove('active-b');
-    renderAll();
-    showToast('Partida añadida');
-  } else {
-    matches.pop();
   }
-});
 
-(async function init(){
-  if(!window.storage){
-    showDebug('window.storage no está disponible en este contexto.');
+
+  /* =========================================================
+     ORDENAR PARTIDAS
+  ========================================================= */
+
+  function sortedMatches(){
+
+    return [...matches].sort(
+      (a,b) => {
+
+        if(a.date !== b.date){
+
+          return a.date < b.date
+            ? -1
+            : 1;
+
+        }
+
+        return (a.seq || 0) -
+               (b.seq || 0);
+
+      }
+    );
+
   }
-  await loadMatches();
-  await loadMyVotes();
-  renderAll();
-})();
+
+
+  /* =========================================================
+     CALCULAR ELO
+  ========================================================= */
+
+  function computeStandings(){
+
+    const ratings = {};
+
+    const stats = {};
+
+
+    BASE_PLAYERS.forEach(
+      p => {
+
+        ratings[p.name] =
+          p.rating;
+
+        stats[p.name] = {
+
+          played:p.played,
+
+          wins:p.wins,
+
+          losses:p.losses
+
+        };
+
+      }
+    );
+
+
+    function ensure(name){
+
+      if(!(name in ratings)){
+
+        ratings[name] =
+          START_RATING;
+
+        stats[name] = {
+
+          played:0,
+
+          wins:0,
+
+          losses:0
+
+        };
+
+      }
+
+    }
+
+
+    const perMatchDelta = {};
+
+
+    sortedMatches().forEach(
+      m => {
+
+        [
+          ...m.teamA,
+          ...m.teamB
+        ].forEach(ensure);
+
+
+        const RA =
+          (
+            ratings[m.teamA[0]] +
+            ratings[m.teamA[1]]
+          ) / 2;
+
+
+        const RB =
+          (
+            ratings[m.teamB[0]] +
+            ratings[m.teamB[1]]
+          ) / 2;
+
+
+        const EA =
+          1 /
+          (
+            1 +
+            Math.pow(
+              10,
+              (RB - RA) / 400
+            )
+          );
+
+
+        const EB =
+          1 - EA;
+
+
+        const SA =
+          m.winner === 'A'
+            ? 1
+            : 0;
+
+
+        const SB =
+          1 - SA;
+
+
+        const deltaA =
+          Math.round(
+            K * (SA - EA)
+          );
+
+
+        const deltaB =
+          Math.round(
+            K * (SB - EB)
+          );
+
+
+        m.teamA.forEach(
+          name =>
+            ratings[name] += deltaA
+        );
+
+
+        m.teamB.forEach(
+          name =>
+            ratings[name] += deltaB
+        );
+
+
+        m.teamA.forEach(
+          name => {
+
+            stats[name].played++;
+
+            if(m.winner === 'A'){
+              stats[name].wins++;
+            }else{
+              stats[name].losses++;
+            }
+
+          }
+        );
+
+
+        m.teamB.forEach(
+          name => {
+
+            stats[name].played++;
+
+            if(m.winner === 'B'){
+              stats[name].wins++;
+            }else{
+              stats[name].losses++;
+            }
+
+          }
+        );
+
+
+        perMatchDelta[m.id] = {
+
+          deltaA,
+
+          deltaB
+
+        };
+
+      }
+    );
+
+
+    const all =
+      Object.keys(ratings)
+        .map(
+          name => ({
+
+            name,
+
+            rating:
+              Math.round(
+                ratings[name]
+              ),
+
+            played:
+              stats[name].played,
+
+            wins:
+              stats[name].wins,
+
+            losses:
+              stats[name].losses
+
+          })
+        );
+
+
+    const ranked =
+      all
+        .filter(
+          p => p.played >= MIN_GAMES
+        )
+        .sort(
+          (a,b) =>
+            b.rating - a.rating
+        );
+
+
+    const pending =
+      all
+        .filter(
+          p => p.played < MIN_GAMES
+        )
+        .sort(
+          (a,b) =>
+            b.played - a.played
+        );
+
+
+    return {
+
+      ranked,
+
+      pending,
+
+      perMatchDelta,
+
+      allNames:
+        Object.keys(ratings)
+
+    };
+
+  }
+
+
+  /* =========================================================
+     SELECTS DE JUGADORES
+  ========================================================= */
+
+  function populateSelect(
+    selectEl,
+    names
+  ){
+
+    const prev =
+      selectEl.value;
+
+
+    const opts = [
+
+      '<option value="">-- Elegir --</option>'
+
+    ]
+    .concat(
+      names.map(
+        n =>
+          `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`
+      )
+    )
+    .concat([
+
+      `<option value="${OTHER_VALUE}">Otro (jugador nuevo)</option>`
+
+    ]);
+
+
+    selectEl.innerHTML =
+      opts.join('');
+
+
+    if(
+      prev &&
+      [...selectEl.options]
+        .some(
+          o => o.value === prev
+        )
+    ){
+
+      selectEl.value =
+        prev;
+
+    }
+
+  }
+
+
+  function renderPlayersSelects(names){
+
+    knownPlayers =
+      [...names]
+        .sort(
+          (a,b) =>
+            a.localeCompare(
+              b,
+              'es'
+            )
+        );
+
+
+    SLOTS.forEach(
+      slot => {
+
+        populateSelect(
+          document.getElementById(
+            slot + '-select'
+          ),
+          knownPlayers
+        );
+
+      }
+    );
+
+  }
+
+
+  function getSlotValue(slot){
+
+    const select =
+      document.getElementById(
+        slot + '-select'
+      );
+
+
+    const other =
+      document.getElementById(
+        slot + '-other'
+      );
+
+
+    if(
+      select.value ===
+      OTHER_VALUE
+    ){
+
+      return other.value.trim();
+
+    }
+
+
+    return select.value.trim();
+
+  }
+
+
+  /* =========================================================
+     SELECT "OTRO"
+  ========================================================= */
+
+  SLOTS.forEach(
+    slot => {
+
+      const select =
+        document.getElementById(
+          slot + '-select'
+        );
+
+
+      const other =
+        document.getElementById(
+          slot + '-other'
+        );
+
+
+      select.addEventListener(
+        'change',
+        () => {
+
+          if(
+            select.value ===
+            OTHER_VALUE
+          ){
+
+            other.style.display =
+              'block';
+
+            other.focus();
+
+          }else{
+
+            other.style.display =
+              'none';
+
+            other.value =
+              '';
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+  /* =========================================================
+     RENDER RANKING
+  ========================================================= */
+
+  function renderBoard(ranked){
+
+    const board =
+      document.getElementById(
+        'board'
+      );
+
+
+    document.getElementById(
+      'board-count'
+    ).textContent =
+      ranked.length
+        ? `· ${ranked.length} jugadores`
+        : '';
+
+
+    if(ranked.length === 0){
+
+      board.innerHTML =
+        `<div class="empty">
+          Nadie llega todavía a las ${MIN_GAMES} partidas mínimas.
+        </div>`;
+
+      return;
+
+    }
+
+
+    board.innerHTML =
+      ranked.map(
+        (p,i) => {
+
+          const pct =
+            p.played > 0
+              ? p.wins / p.played
+              : 0;
+
+
+          return `
+
+            <div class="row">
+
+              <div class="rank">
+                ${i + 1}
+              </div>
+
+              ${avatarHTML(p.name)}
+
+              <div>
+
+                <div class="name">
+                  ${escapeHtml(p.name)}
+                </div>
+
+                <div class="record">
+                  ${p.played} partidas ·
+                  ${p.wins}V
+                  ${p.losses}D
+                </div>
+
+              </div>
+
+              <div class="pct">
+                ${pct.toFixed(3)}
+              </div>
+
+              <div class="elo">
+                ${p.rating}
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      ).join('');
+
+  }
+
+
+  /* =========================================================
+     RENDER PENDIENTES
+  ========================================================= */
+
+  function renderPending(pending){
+
+    const section =
+      document.getElementById(
+        'pending-section'
+      );
+
+
+    const box =
+      document.getElementById(
+        'pending'
+      );
+
+
+    document.getElementById(
+      'pending-count'
+    ).textContent =
+      pending.length
+        ? `· ${pending.length}`
+        : '';
+
+
+    if(pending.length === 0){
+
+      section.style.display =
+        'none';
+
+      return;
+
+    }
+
+
+    section.style.display =
+      'block';
+
+
+    box.innerHTML =
+      pending.map(
+        p => `
+
+          <div class="pending-row">
+
+            <span class="pname">
+              ${escapeHtml(p.name)}
+            </span>
+
+            <span class="pprog">
+              ${p.played}/${MIN_GAMES}
+            </span>
+
+          </div>
+
+        `
+      ).join('');
+
+  }
+
+
+  /* =========================================================
+     RENDER HISTORIAL
+  ========================================================= */
+
+  function renderHistory(
+    perMatchDelta
+  ){
+
+    const container =
+      document.getElementById(
+        'history'
+      );
+
+
+    const ordered =
+      [...sortedMatches()]
+        .reverse();
+
+
+    document.getElementById(
+      'hist-count'
+    ).textContent =
+      ordered.length
+        ? `· ${ordered.length} partidas`
+        : '';
+
+
+    if(ordered.length === 0){
+
+      container.innerHTML =
+        '<div class="empty">Sin partidas todavía.</div>';
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      ordered.map(
+        m => {
+
+          const d =
+            perMatchDelta[m.id] ||
+            {
+              deltaA:0,
+              deltaB:0
+            };
+
+
+          const votes =
+            m.deleteVotes || 0;
+
+
+          const iVoted =
+            myVotes.includes(m.id);
+
+
+          const winTeam =
+            m.winner === 'A'
+              ? m.teamA
+              : m.teamB;
+
+
+          const loseTeam =
+            m.winner === 'A'
+              ? m.teamB
+              : m.teamA;
+
+
+          const winDelta =
+            m.winner === 'A'
+              ? d.deltaA
+              : d.deltaB;
+
+
+          const loseDelta =
+            m.winner === 'A'
+              ? d.deltaB
+              : d.deltaA;
+
+
+          const dots =
+            Array
+              .from({
+                length:VOTES_NEEDED
+              })
+              .map(
+                (_,i) =>
+                  `<div class="vote-dot ${i < votes ? 'filled' : ''}"></div>`
+              )
+              .join('');
+
+
+          return `
+
+            <div class="hist-item">
+
+              <div class="hist-top">
+
+                <div class="hist-main">
+
+                  <div class="hist-date">
+                    ${formatDate(m.date)}
+                  </div>
+
+                  <div class="hist-match">
+
+                    <span class="win">
+                      ${escapeHtml(
+                        winTeam.join(' y ')
+                      )}
+                    </span>
+
+                    (+${winDelta})
+
+                    &nbsp;ganaron a&nbsp;
+
+                    <span class="lose">
+                      ${escapeHtml(
+                        loseTeam.join(' y ')
+                      )}
+                    </span>
+
+                    (${loseDelta})
+
+                  </div>
+
+                </div>
+
+
+                <button
+                  class="del-btn"
+                  data-id="${m.id}"
+                  ${iVoted ? 'disabled' : ''}
+                >
+                  ${
+                    iVoted
+                      ? `Votado (${votes}/${VOTES_NEEDED})`
+                      : `Eliminar (${votes}/${VOTES_NEEDED})`
+                  }
+                </button>
+
+              </div>
+
+
+              <div class="vote-dots">
+                ${dots}
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      ).join('');
+
+
+    container
+      .querySelectorAll('.del-btn')
+      .forEach(
+        btn => {
+
+          btn.addEventListener(
+            'click',
+            async () => {
+
+              const id =
+                btn.getAttribute(
+                  'data-id'
+                );
+
+
+              if(myVotes.includes(id)){
+                return;
+              }
+
+
+              btn.disabled =
+                true;
+
+
+              await voteDeleteMatch(id);
+
+            }
+          );
+
+        }
+      );
+
+  }
+
+
+  /* =========================================================
+     FECHAS / HTML
+  ========================================================= */
+
+  function formatDate(iso){
+
+    if(!iso){
+      return '';
+    }
+
+
+    const parts =
+      iso.split('-');
+
+
+    if(parts.length !== 3){
+      return iso;
+    }
+
+
+    const [
+      y,
+      m,
+      d
+    ] = parts;
+
+
+    return `${d}/${m}/${y}`;
+
+  }
+
+
+  function escapeHtml(str){
+
+    const div =
+      document.createElement(
+        'div'
+      );
+
+
+    div.textContent =
+      String(str);
+
+
+    return div.innerHTML;
+
+  }
+
+
+  /* =========================================================
+     RENDER GENERAL
+  ========================================================= */
+
+  function renderAll(){
+
+    const {
+
+      ranked,
+
+      pending,
+
+      perMatchDelta,
+
+      allNames
+
+    } = computeStandings();
+
+
+    renderPlayersSelects(
+      allNames
+    );
+
+
+    renderBoard(
+      ranked
+    );
+
+
+    renderPending(
+      pending
+    );
+
+
+    renderHistory(
+      perMatchDelta
+    );
+
+  }
+
+
+  /* =========================================================
+     SELECCIÓN DE GANADOR
+  ========================================================= */
+
+  document
+    .getElementById('winA')
+    .addEventListener(
+      'click',
+      () => {
+
+        selectedWinner =
+          'A';
+
+
+        document
+          .getElementById('winA')
+          .classList
+          .add('active-a');
+
+
+        document
+          .getElementById('winB')
+          .classList
+          .remove('active-b');
+
+      }
+    );
+
+
+  document
+    .getElementById('winB')
+    .addEventListener(
+      'click',
+      () => {
+
+        selectedWinner =
+          'B';
+
+
+        document
+          .getElementById('winB')
+          .classList
+          .add('active-b');
+
+
+        document
+          .getElementById('winA')
+          .classList
+          .remove('active-a');
+
+      }
+    );
+
+
+  /* =========================================================
+     FORMULARIO — NUEVA PARTIDA
+  ========================================================= */
+
+  document
+    .getElementById('match-form')
+    .addEventListener(
+      'submit',
+      async e => {
+
+        e.preventDefault();
+
+
+        const msg =
+          document.getElementById(
+            'form-msg'
+          );
+
+
+        msg.textContent =
+          '';
+
+
+        showDebug(
+          null
+        );
+
+
+        const a1 =
+          getSlotValue('a1');
+
+
+        const a2 =
+          getSlotValue('a2');
+
+
+        const b1 =
+          getSlotValue('b1');
+
+
+        const b2 =
+          getSlotValue('b2');
+
+
+        const date =
+          document.getElementById(
+            'matchDate'
+          ).value ||
+          todayISO();
+
+
+        if(
+          !a1 ||
+          !a2 ||
+          !b1 ||
+          !b2
+        ){
+
+          msg.textContent =
+            'Rellena los 4 jugadores.';
+
+          return;
+
+        }
+
+
+        const allNamesLower =
+          [
+            a1,
+            a2,
+            b1,
+            b2
+          ].map(
+            n =>
+              n.toLowerCase()
+          );
+
+
+        if(
+          new Set(
+            allNamesLower
+          ).size !== 4
+        ){
+
+          msg.textContent =
+            'Los 4 jugadores deben ser distintos.';
+
+          return;
+
+        }
+
+
+        if(!selectedWinner){
+
+          msg.textContent =
+            'Marca qué pareja ha ganado.';
+
+          return;
+
+        }
+
+
+        const submitBtn =
+          document.getElementById(
+            'submit-btn'
+          );
+
+
+        submitBtn.disabled =
+          true;
+
+
+        submitBtn.textContent =
+          'Guardando…';
+
+
+        const maxSeq =
+          matches.reduce(
+            (max,m) =>
+              Math.max(
+                max,
+                m.seq || 0
+              ),
+            0
+          );
+
+
+        const newMatch = {
+
+          seq:
+            maxSeq + 1,
+
+          date,
+
+          teamA:[
+            a1,
+            a2
+          ],
+
+          teamB:[
+            b1,
+            b2
+          ],
+
+          winner:
+            selectedWinner,
+
+          deleteVotes:
+            0,
+
+          createdAt:
+            Date.now()
+
+        };
+
+
+        const ok =
+          await saveMatch(
+            newMatch
+          );
+
+
+        submitBtn.disabled =
+          false;
+
+
+        submitBtn.textContent =
+          'Añadir partida';
+
+
+        if(ok){
+
+          SLOTS.forEach(
+            slot => {
+
+              document
+                .getElementById(
+                  slot + '-select'
+                )
+                .value = '';
+
+
+              document
+                .getElementById(
+                  slot + '-other'
+                )
+                .value = '';
+
+
+              document
+                .getElementById(
+                  slot + '-other'
+                )
+                .style.display =
+                  'none';
+
+            }
+          );
+
+
+          document
+            .getElementById(
+              'matchDate'
+            )
+            .value =
+              todayISO();
+
+
+          selectedWinner =
+            null;
+
+
+          document
+            .getElementById('winA')
+            .classList
+            .remove('active-a');
+
+
+          document
+            .getElementById('winB')
+            .classList
+            .remove('active-b');
+
+
+          showToast(
+            'Partida añadida'
+          );
+
+        }
+
+      }
+    );
+
+
+  /* =========================================================
+     INICIO
+  ========================================================= */
+
+  loadMyVotes();
+
+  startRealtimeListener();
+
 </script>
+
 </body>
 </html>
