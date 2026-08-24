@@ -197,7 +197,7 @@
   .team-label.a{color:var(--teal);}
   .team-label.b{color:var(--gold);}
   .team-pair{display:flex; gap:8px;}
-  .team-pair .field{flex:1;}
+  .team-pair .field{flex:1; display:flex; flex-direction:column; gap:6px;}
   .vs-divider{
     text-align:center;
     color:var(--ink-muted);
@@ -212,7 +212,7 @@
     margin-bottom:5px;
     letter-spacing:.02em;
   }
-  input[type="text"], input[type="date"]{
+  input[type="text"], input[type="date"], select{
     width:100%;
     background:var(--bg);
     border:1px solid var(--line);
@@ -222,7 +222,16 @@
     font-size:14.5px;
     font-family:'Inter',sans-serif;
   }
-  input:focus{outline:2px solid var(--teal); outline-offset:1px;}
+  select{
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a96a6' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 10px center;
+    padding-right:30px;
+  }
+  select:invalid{color:var(--ink-muted);}
+  input:focus, select:focus{outline:2px solid var(--teal); outline-offset:1px;}
   .winner-row{display:flex; gap:8px;}
   .winner-btn{
     flex:1;
@@ -299,8 +308,21 @@
     transition:opacity .25s ease;
     max-width:88%;
     text-align:center;
+    z-index:50;
   }
   .toast.show{opacity:1;}
+  .debug-box{
+    margin-top:6px;
+    font-size:11px;
+    color:var(--danger-strong);
+    background:#2a1613;
+    border:1px solid var(--danger-strong);
+    border-radius:7px;
+    padding:8px 10px;
+    display:none;
+    word-break:break-word;
+  }
+  .debug-box.show{display:block;}
 </style>
 </head>
 <body>
@@ -334,8 +356,14 @@
       <div class="team-block">
         <div class="team-label a">Pareja A</div>
         <div class="team-pair">
-          <div class="field"><input type="text" id="a1" list="players-list" autocomplete="off" placeholder="Jugador"></div>
-          <div class="field"><input type="text" id="a2" list="players-list" autocomplete="off" placeholder="Jugador"></div>
+          <div class="field">
+            <select id="a1-select" class="player-select" data-slot="a1"></select>
+            <input type="text" id="a1-other" class="player-other" autocomplete="off" placeholder="Nombre del jugador nuevo" style="display:none;">
+          </div>
+          <div class="field">
+            <select id="a2-select" class="player-select" data-slot="a2"></select>
+            <input type="text" id="a2-other" class="player-other" autocomplete="off" placeholder="Nombre del jugador nuevo" style="display:none;">
+          </div>
         </div>
       </div>
 
@@ -344,12 +372,16 @@
       <div class="team-block">
         <div class="team-label b">Pareja B</div>
         <div class="team-pair">
-          <div class="field"><input type="text" id="b1" list="players-list" autocomplete="off" placeholder="Jugador"></div>
-          <div class="field"><input type="text" id="b2" list="players-list" autocomplete="off" placeholder="Jugador"></div>
+          <div class="field">
+            <select id="b1-select" class="player-select" data-slot="b1"></select>
+            <input type="text" id="b1-other" class="player-other" autocomplete="off" placeholder="Nombre del jugador nuevo" style="display:none;">
+          </div>
+          <div class="field">
+            <select id="b2-select" class="player-select" data-slot="b2"></select>
+            <input type="text" id="b2-other" class="player-other" autocomplete="off" placeholder="Nombre del jugador nuevo" style="display:none;">
+          </div>
         </div>
       </div>
-
-      <datalist id="players-list"></datalist>
 
       <div>
         <label>¿Qué pareja ganó?</label>
@@ -365,6 +397,7 @@
       </div>
 
       <div class="form-msg" id="form-msg"></div>
+      <div class="debug-box" id="debug-box"></div>
       <button type="submit" class="submit-btn" id="submit-btn">Añadir partida</button>
     </form>
   </section>
@@ -382,6 +415,8 @@ const K = 32;
 const START_RATING = 1000;
 const MIN_GAMES = 20;
 const VOTES_NEEDED = 3;
+const OTHER_VALUE = '__other__';
+const SLOTS = ['a1','a2','b1','b2'];
 
 document.getElementById('min-label').textContent = MIN_GAMES;
 
@@ -449,6 +484,7 @@ function avatarHTML(name){
 let matches = [];
 let selectedWinner = null;
 let myVotes = []; // ids of matches this device has already voted to delete
+let knownPlayers = []; // names currently offered in the dropdowns
 
 function todayISO(){
   return new Date().toISOString().slice(0,10);
@@ -459,7 +495,14 @@ function showToast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2400);
+  setTimeout(()=>t.classList.remove('show'), 2600);
+}
+
+function showDebug(text){
+  const box = document.getElementById('debug-box');
+  if(!text){ box.classList.remove('show'); box.textContent=''; return; }
+  box.textContent = 'Detalle técnico: ' + text;
+  box.classList.add('show');
 }
 
 async function loadMatches(){
@@ -472,9 +515,19 @@ async function loadMatches(){
 async function saveMatches(){
   try{
     const result = await window.storage.set('museo-elo:matches', JSON.stringify(matches), true);
-    if(!result){ showToast('No se pudo guardar. Inténtalo de nuevo.'); return false; }
+    if(!result){
+      showToast('No se pudo guardar los datos.');
+      showDebug('window.storage.set devolvió un resultado vacío/null.');
+      return false;
+    }
+    showDebug(null);
     return true;
-  }catch(e){ showToast('Error al guardar los datos.'); return false; }
+  }catch(e){
+    console.error('Error guardando en storage:', e);
+    showToast('Error al guardar los datos.');
+    showDebug((e && (e.message || e.toString())) || 'error desconocido');
+    return false;
+  }
 }
 
 async function loadMyVotes(){
@@ -548,15 +601,48 @@ function computeStandings(){
   return { ranked, pending, perMatchDelta, allNames: Object.keys(ratings) };
 }
 
-function renderPlayersList(names){
-  const dl = document.getElementById('players-list');
-  dl.innerHTML = '';
-  [...names].sort().forEach(n=>{
-    const opt = document.createElement('option');
-    opt.value = n;
-    dl.appendChild(opt);
+function populateSelect(selectEl, names){
+  const prev = selectEl.value;
+  const opts = ['<option value="">-- Elegir --</option>']
+    .concat(names.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`))
+    .concat([`<option value="${OTHER_VALUE}">Otro (jugador nuevo)</option>`]);
+  selectEl.innerHTML = opts.join('');
+  // conservar selección previa si el jugador sigue existiendo
+  if(prev && [...selectEl.options].some(o=>o.value===prev)){
+    selectEl.value = prev;
+  }
+}
+
+function renderPlayersSelects(names){
+  knownPlayers = [...names].sort((a,b)=>a.localeCompare(b,'es'));
+  SLOTS.forEach(slot=>{
+    populateSelect(document.getElementById(slot+'-select'), knownPlayers);
   });
 }
+
+function getSlotValue(slot){
+  const select = document.getElementById(slot+'-select');
+  const other = document.getElementById(slot+'-other');
+  if(select.value === OTHER_VALUE){
+    return other.value.trim();
+  }
+  return select.value.trim();
+}
+
+// alternar el input de texto "otro" según el select
+SLOTS.forEach(slot=>{
+  const select = document.getElementById(slot+'-select');
+  const other = document.getElementById(slot+'-other');
+  select.addEventListener('change', ()=>{
+    if(select.value === OTHER_VALUE){
+      other.style.display = 'block';
+      other.focus();
+    } else {
+      other.style.display = 'none';
+      other.value = '';
+    }
+  });
+});
 
 function renderBoard(ranked){
   const board = document.getElementById('board');
@@ -668,7 +754,7 @@ function escapeHtml(str){
 
 function renderAll(){
   const { ranked, pending, perMatchDelta, allNames } = computeStandings();
-  renderPlayersList(allNames);
+  renderPlayersSelects(allNames);
   renderBoard(ranked);
   renderPending(pending);
   renderHistory(perMatchDelta);
@@ -689,16 +775,17 @@ document.getElementById('match-form').addEventListener('submit', async (e)=>{
   e.preventDefault();
   const msg = document.getElementById('form-msg');
   msg.textContent = '';
+  showDebug(null);
 
-  const a1 = document.getElementById('a1').value.trim();
-  const a2 = document.getElementById('a2').value.trim();
-  const b1 = document.getElementById('b1').value.trim();
-  const b2 = document.getElementById('b2').value.trim();
+  const a1 = getSlotValue('a1');
+  const a2 = getSlotValue('a2');
+  const b1 = getSlotValue('b1');
+  const b2 = getSlotValue('b2');
   const date = document.getElementById('matchDate').value || todayISO();
 
   if(!a1 || !a2 || !b1 || !b2){ msg.textContent = 'Rellena los 4 jugadores.'; return; }
-  const allNames = [a1,a2,b1,b2].map(n=>n.toLowerCase());
-  if(new Set(allNames).size !== 4){ msg.textContent = 'Los 4 jugadores deben ser distintos.'; return; }
+  const allNamesLower = [a1,a2,b1,b2].map(n=>n.toLowerCase());
+  if(new Set(allNamesLower).size !== 4){ msg.textContent = 'Los 4 jugadores deben ser distintos.'; return; }
   if(!selectedWinner){ msg.textContent = 'Marca qué pareja ha ganado.'; return; }
 
   const submitBtn = document.getElementById('submit-btn');
@@ -719,7 +806,11 @@ document.getElementById('match-form').addEventListener('submit', async (e)=>{
   const ok = await saveMatches();
   submitBtn.disabled = false;
   if(ok){
-    ['a1','a2','b1','b2'].forEach(id=>document.getElementById(id).value = '');
+    SLOTS.forEach(slot=>{
+      document.getElementById(slot+'-select').value = '';
+      document.getElementById(slot+'-other').value = '';
+      document.getElementById(slot+'-other').style.display = 'none';
+    });
     document.getElementById('matchDate').value = todayISO();
     selectedWinner = null;
     document.getElementById('winA').classList.remove('active-a');
@@ -732,6 +823,9 @@ document.getElementById('match-form').addEventListener('submit', async (e)=>{
 });
 
 (async function init(){
+  if(!window.storage){
+    showDebug('window.storage no está disponible en este contexto.');
+  }
   await loadMatches();
   await loadMyVotes();
   renderAll();
